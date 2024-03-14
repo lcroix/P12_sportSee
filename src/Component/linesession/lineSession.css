@@ -1,0 +1,27 @@
+#line-charts {
+    width: 270px;
+    height: 270px;
+    background-color: #FF0000;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+#line-charts .line-charts-title{
+    color: #FF8080;
+    padding: 30px;
+    font-weight: 600;
+    position: absolute;
+}
+
+#line-charts .custom-tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    font-size: 10px;
+    font-weight: 600;
+}

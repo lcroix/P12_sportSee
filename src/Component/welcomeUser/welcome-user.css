@@ -1,0 +1,13 @@
+.hello-text {
+    font-size: 48px;
+    font-weight: 400;
+}
+
+.hello-text span {
+    color: #FF0101;
+}
+.motivation-text {
+    font-size: 18px;
+    font-weight: 400;
+    padding-bottom: 20px;
+}

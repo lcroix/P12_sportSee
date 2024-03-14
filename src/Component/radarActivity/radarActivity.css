@@ -1,0 +1,11 @@
+#radar-charts {
+    width: 270px;
+    height: 270px;
+    background-color: #282D30;
+    border-radius: 10px;
+}
+
+#radar-charts tspan{
+    font-size: 12px;
+    font-weight: 600;
+}

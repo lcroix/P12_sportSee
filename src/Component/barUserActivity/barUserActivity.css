@@ -1,0 +1,65 @@
+#bar-charts {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #FBFBFB;
+    padding: 30px;
+}
+
+#bar-charts .bar-charts-header{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 30px;
+}
+
+#bar-charts .bar-charts-header p{
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#bar-charts .bar-charts-header ul{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    list-style-type: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+#bar-charts .bar-charts-header-legend li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #74798C;
+  }
+#bar-charts .bar-charts-header-legend li::before {
+    display: block;
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 15px;
+  }
+#bar-charts .bar-charts-header-legend li:first-child::before {
+    background-color: #282d30;
+}
+#bar-charts .bar-charts-header-legend li:last-child::before {
+    background-color: #e60000;
+}
+
+#bar-charts tspan{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#bar-charts .custom-tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background-color: #e60000;
+    color: white;
+    padding: 10px;
+}
+
+#bar-charts .custom-tooltip label-kg {
+    padding-bottom: 10px;
+}
