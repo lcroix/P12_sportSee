@@ -2,22 +2,34 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { getUserAverageSessions } from '../../services/callAPI';
+import { Navigate } from "react-router-dom";
 import './lineSession.css'
 
 function LineSession(props) {
     const userId = props.userId.id;
 
   const [userAverageSessions, setUserAverageSessions] = useState('');
+  const [error, setError] = useState(null);
   let formatedUserAverageSessions = [];
 
   useEffect(() => {
     async function getUserAverageSessionOnLoad(id) {
-      const userData = await getUserAverageSessions(id);
-      setUserAverageSessions(userData.sessions)
+      try {
+        if (id) {
+        const userData = await getUserAverageSessions(id);
+        setUserAverageSessions(userData.sessions)
+        }
+        else {
+					throw new Error("Aucune donnée disponible.");
+      }
+      } catch (error) {
+        setError(error.message);
+      }
     }
 
     getUserAverageSessionOnLoad(userId);
-  }, []);
+  }, [userId]);
+  if (error) return <Navigate to="/Error" />;
 
   function CustomDatas(userSessions) {
     const daysOfTheWeek = {

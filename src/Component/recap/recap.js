@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { getUserDetails } from '../../services/callAPI';
+import { Navigate } from "react-router-dom";
 import energyIcon from '../../assets/icons/energy.svg'
 import chickenIcon from '../../assets/icons/chicken.svg'
 import appleIcon from '../../assets/icons/apple.svg'
@@ -14,22 +15,32 @@ function Recap(props) {
     const [proteinCount, setProteinCount] = useState('');
     const [carbohydrateCount, setCarbohydrateCount] = useState('');
     const [lipidCount, setLipidCount] = useState('');
+    const [error, setError] = useState(null);
     let icon = '';
     let iconAlt = '';
     let valueLabel = '';
 
       useEffect(() => {
         async function getUserInfosOnLoad(id) {
+          try {
+            if (id) {
           const userInfoData = await getUserDetails(id);
           setCalorieCount(userInfoData.keyData.calorieCount);
           setProteinCount(userInfoData.keyData.proteinCount);
           setCarbohydrateCount(userInfoData.keyData.carbohydrateCount);
           setLipidCount(userInfoData.keyData.lipidCount);
+            }   else {
+              throw new Error("Aucune donnée disponible.");
+          }
+        }
+        catch (error) {
+          setError(error.message);
+        }
         }
     
         getUserInfosOnLoad(userId)
-      }, []);
-
+      }, [userId]);
+      if (error) return <Navigate to="/Error" />;
     if ( props.type === "Calories") {
         icon = energyIcon;
         iconAlt= 'icon calories';

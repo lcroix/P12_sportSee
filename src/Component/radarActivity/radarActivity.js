@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { getUserPerformance } from '../../services/callAPI';
+import { Navigate } from "react-router-dom";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import './radarActivity.css'
 
@@ -9,16 +10,26 @@ function RadarActivity(props) {
     const userId = props.userId.id;
 
     const [userPerf, setUserPerf] = useState('');
+    const [error, setError] = useState(null);
     let formatedUserPerf = [];
   
       useEffect(() => {
         async function getUserPerfOnLoad(id) {
+          try {
+            if (id) {
           const userData = await getUserPerformance(id);
           setUserPerf(userData)
+            }else {
+            throw new Error("Aucune donnée disponible.");
+        }
+          } catch (error) {
+            setError(error.message);
+          }
         }
     
         getUserPerfOnLoad(userId);
-      }, []);
+      }, [userId]);
+      if (error) return <Navigate to="/Error" />;
       function CustomDatasPerf(props) {
         const labels = {
           1: "Cardio",

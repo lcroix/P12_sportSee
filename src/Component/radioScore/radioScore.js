@@ -1,22 +1,34 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { getUserDetails } from '../../services/callAPI';
+import { Navigate } from "react-router-dom";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 import './radioScore.css'
 
 function RadioScore(props) {
     const userId = props.userId.id;
     const [userScore, setUserScore] = useState('');
+    const [error, setError] = useState(null);
 
     useEffect(() => {
+      
       async function getUserInfosOnLoad(id) {
-        const userInfoData = await getUserDetails(id);
-        console.log(userInfoData);
-        setUserScore(userInfoData.score)
+          try {
+            if (id) {
+          const userInfoData = await getUserDetails(id);
+          setUserScore(userInfoData.score)
+            }
+            else {
+              throw new Error("Aucune donnée disponible.");
+          }
+        }catch (error) {
+          setError(error.message);
+        }
       }
   
       getUserInfosOnLoad(userId)
-    }, []);
+    }, [userId]);
+    if (error) return <Navigate to="/Error" />;
 
     const CustomLegend = ({ payload }) => (
         <div className="custom-legend">
