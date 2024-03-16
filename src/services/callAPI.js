@@ -5,6 +5,10 @@ import {
   USER_AVERAGE_SESSIONS,
   USER_PERFORMANCE,
 } from "./Mock";
+import UserPerf from "./models/userPerf";
+import UserInfo from "./models/userInfo";
+import UserActivity from "./models/userModel";
+import UserSession from "./models/userSession";
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 const usedMocks = process.env.REACT_APP_API_MOCK;
@@ -13,7 +17,15 @@ const usedMocks = process.env.REACT_APP_API_MOCK;
 export async function getUserDetailsFromMocks(id) {
   id = parseInt(id);
   try {
-    return USER_MAIN_DATA.find((user) => user.id === id);
+    let userInfoData;
+            const mockedData = USER_MAIN_DATA;
+            for (var i = 0; i < mockedData.length; i++) {
+                if (mockedData[i].id === id) {
+                    userInfoData = new UserInfo(mockedData[i]);
+                    break;
+                }
+            }
+            return userInfoData;
   } catch (error) {
     console.error(
       "Il y a eu une erreur lors de la récupération des détails de l'utilisateur à partir des mocks:",
@@ -26,8 +38,9 @@ export async function getUserDetailsFromMocks(id) {
 // Fonction pour obtenir les détails de l'utilisateur à partir de l'API
 export async function getUserDetailsFromAPI(id) {
   try {
-    const response = await axios.get(`${baseUrl}/user/${id}`);
-    return response.data.data;
+    const { data } = await axios.get(`${baseUrl}/user/${id}`);
+    let userInfoData = new UserInfo(data.data);
+    return userInfoData;
   } catch (error) {
     console.error(
       "Il y a eu une erreur lors de la récupération des détails de l'utilisateur à partir de l'API:",
@@ -49,7 +62,15 @@ export async function getUserDetails(id) {
 async function getUserActivityWithMocks(id) {
   id = parseInt(id);
   try {
-    return USER_ACTIVITY.find((user) => user.userId === id);
+    let userSession;
+            const mockedData = USER_ACTIVITY;
+            for (var i = 0; i < mockedData.length; i++) {
+                if (mockedData[i].userId === id) {
+                    userSession = new UserActivity(mockedData[i]);
+                    break;
+                }
+            }
+            return userSession;
   } catch (error) {
     console.error(error);
     throw error;
@@ -59,8 +80,9 @@ async function getUserActivityWithMocks(id) {
 // Fonction pour obtenir l'activité de l'utilisateur sans utiliser les mocks (requête réelle)
 async function getUserActivityWithoutMocks(id) {
   try {
-    const response = await axios.get(`${baseUrl}/user/${id}/activity`);
-    return response.data.data;
+    const { data } = await axios.get(`${baseUrl}/user/${id}/activity`);
+    let userSession = new UserActivity(data.data);
+    return userSession;
   } catch (error) {
     console.error(error);
     throw error;
@@ -80,8 +102,15 @@ export async function getUserActivity(id) {
 async function getUserAverageSessionsWithMocks(id) {
   id = parseInt(id);
   try {
-    return USER_AVERAGE_SESSIONS.find((user) => user.userId === id);
-  } catch (error) {
+    let userAverageSession;
+    const mockedData = USER_AVERAGE_SESSIONS;
+    for (var i = 0; i < mockedData.length; i++) {
+        if (mockedData[i].userId === id) {
+            userAverageSession = new UserSession(mockedData[i]);
+            break;
+        }
+    }
+    return userAverageSession;  } catch (error) {
     console.error(error);
     throw error;
   }
@@ -90,8 +119,9 @@ async function getUserAverageSessionsWithMocks(id) {
 // Fonction pour obtenir les sessions moyennes de l'utilisateur sans utiliser les mocks (requête réelle)
 async function getUserAverageSessionsWithoutMocks(id) {
   try {
-    const response = await axios.get(`${baseUrl}/user/${id}/average-sessions`);
-    return response.data.data;
+    const { data } = await axios.get(`${baseUrl}/user/${id}/average-sessions`);
+    let userAverageSession = new UserSession(data.data);
+    return userAverageSession;
   } catch (error) {
     console.error(error);
     throw error;
@@ -111,8 +141,15 @@ export async function getUserAverageSessions(id) {
 async function getUserPerformanceWithMocks(id) {
   id = parseInt(id);
   try {
-    return USER_PERFORMANCE.find((user) => user.userId === id);
-  } catch (error) {
+    let userSession;
+    const mockedData = USER_PERFORMANCE;
+    for (var i = 0; i < mockedData.length; i++) {
+      if (mockedData[i].userId === id) {
+          userSession = new UserPerf(mockedData[i]);
+          break;
+      }
+  }
+  return userSession;  } catch (error) {
     console.error(error);
     throw error;
   }
@@ -121,8 +158,9 @@ async function getUserPerformanceWithMocks(id) {
 // Fonction pour obtenir la performance de l'utilisateur sans utiliser les mocks (requête réelle)
 async function getUserPerformanceWithoutMocks(id) {
   try {
-    const response = await axios.get(`${baseUrl}/user/${id}/performance`);
-    return response.data.data;
+    const { data } = await axios.get(`${baseUrl}/user/${id}/performance`);
+    let userSession = new UserPerf(data.data);
+    return userSession;
   } catch (error) {
     console.error(error);
     throw error;

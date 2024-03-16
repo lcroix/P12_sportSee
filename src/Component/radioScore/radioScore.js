@@ -11,7 +11,8 @@ function RadioScore(props) {
     useEffect(() => {
       async function getUserInfosOnLoad(id) {
         const userInfoData = await getUserDetails(id);
-        setUserScore(userInfoData.todayScore)
+        console.log(userInfoData);
+        setUserScore(userInfoData.score)
       }
   
       getUserInfosOnLoad(userId)

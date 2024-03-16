@@ -12,7 +12,7 @@ function WelcomeUser(props) {
   useEffect(() => {
     getUserDetails(userId).then((userInfoData) => {
       setUser({
-        firstName: userInfoData.userInfos.firstName,
+        firstName: userInfoData.firstName,
       });
     });
   }, [userId]);

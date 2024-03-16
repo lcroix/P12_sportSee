@@ -19,7 +19,7 @@ function RadarActivity(props) {
     
         getUserPerfOnLoad(userId);
       }, []);
-      function CustomDatasPerf(perfs) {
+      function CustomDatasPerf(props) {
         const labels = {
           1: "Cardio",
           2: "Energie",
@@ -30,7 +30,7 @@ function RadarActivity(props) {
         }
     
         if (userPerf) {
-          const FormatedSessions = perfs.data.map((perf) => {
+          const FormatedSessions = props.data.map((perf) => {
             return {
               valuePerf: parseInt(perf.value),
               kind: parseInt(perf.kind),
